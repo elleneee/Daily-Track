@@ -1,13 +1,13 @@
 // import { useState } from 'react'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
-import { myFirebase } from './models/myFirebaseDB';
 // import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
-import SearchBar from './components/SearchBar';
+import SearchTab from './components/SearchTab';
 import NewItem from './components/NewItem';
 import ItemGallery from './components/ItemGallery';
 import ItemManager from './models/ItemManager';
+import TagManager from './models/TagManager';
 
 function App() {
 
@@ -22,9 +22,12 @@ function App() {
   
   const itemManager = ItemManager();
 
+  const tagManager = TagManager();
+
   useEffect(() => {
     refreshItems();
     refreshExpItems();
+    refreshTags();
   }, [])
   
   // Retreive items from db
@@ -37,17 +40,42 @@ function App() {
     setExpItems(await itemManager.getExpiredItems());
   }
 
+  // get tags from db
+  async function refreshTags() {
+    setTags(await tagManager.getTags());
+  }
+
   // New item
   async function newItem(item) {
     await itemManager.addItem(item);
     await refreshItems();
   }
 
-  async function searchItems(name, tag, expiration){
-    // setItems(await itemManager.searchItems())
+  // add new tag
+  async function addTag(tag) {
+    await tagManager.addTag(tag);
+    setTags(await tagManager.getTags());
   }
-  async function searchExpItems(name, tag, expiration){
-    
+
+  // Modify item
+  async function modifyItem(item) {
+    await itemManager.modifyItem(item);
+    await refreshItems();
+  }
+
+  // Delete item
+  async function deleteItem(id, expired) {
+    await itemManager.removeItem(id);
+    if(expired){
+      await refreshExpItems();
+    } else {
+      await refreshItems();
+    }
+  }
+
+  // search items by name, tag, expiration
+  async function searchItems(name, tag, expiration){
+    return await itemManager.searchItems(name, tag, expiration);
   }
 
   return (
@@ -86,18 +114,16 @@ function App() {
               </div> */}
               <Tab.Content>
                 <Tab.Pane eventKey="new">
-                  <NewItem newItem={newItem}/>
+                  <NewItem tags={tags} newItem={newItem} addTag={addTag}/>
                 </Tab.Pane>
                 <Tab.Pane eventKey="home">
-                  {/* <SearchBar onSearchItem={searchItems}/> */}
-                  <ItemGallery items={items}/>
+                  <ItemGallery items={items} tags={tags} modifyItem={modifyItem} deleteItem={deleteItem}/>
                 </Tab.Pane>
                 <Tab.Pane eventKey="expired">
-                  {/* <SearchBar onSearchItem={searchItems}/> */}
-                  <ItemGallery items={expiredItems}/>
+                  <ItemGallery items={expiredItems} modifyItem={modifyItem} deleteItem={deleteItem}/>
                 </Tab.Pane>
                 <Tab.Pane eventKey="search">
-                  
+                  <SearchTab searchItems={searchItems} tags={tags} modifyItem={modifyItem} deleteItem={deleteItem}/>
                 </Tab.Pane>
                 <Tab.Pane eventKey="analytics">
                   I guess this is for the third nav tab

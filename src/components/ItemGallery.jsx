@@ -2,7 +2,7 @@ import React from 'react'
 import ItemView from './ItemView'
 import PropTypes from "prop-types";
 
-export default function ItemGallery({ items }) {
+export default function ItemGallery({ items, tags, modifyItem, expired = false, deleteItem } = {}) {
   return (
     <div className='m-3'>
       {/* <div className='d-flex flex-row justify-content-between align-items-center pb-2 pt-2 border-bottom'>
@@ -16,6 +16,10 @@ export default function ItemGallery({ items }) {
           <ItemView 
             key={item.id} 
             item={item} 
+            tags={tags}
+            modifyItem={modifyItem}
+            expired={expired}
+            deleteItem={deleteItem}
             // isModify={isModify} 
             // onRemoveItem={onRemoveItem} 
             // onModifyItem={onModifyItem}
@@ -26,6 +30,10 @@ export default function ItemGallery({ items }) {
 }
 ItemGallery.propTypes = {
   items: PropTypes.array,
+  tags: PropTypes.array,
+  modifyItem: PropTypes.func,
+  expired: PropTypes.bool,
+  deleteItem: PropTypes.func,
   // onRemoveItem: PropTypes.func.isRequired,
   // onModifyItem: PropTypes.func,
   // isModify: PropTypes.bool,

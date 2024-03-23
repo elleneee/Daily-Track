@@ -12,11 +12,11 @@ export default function TagManager() {
   const myDB = myFirebase;
 
   async function getTags() {
-    return myDB.getTags();
+    return await myDB.getTags();
   }
 
   async function addTag(tag){
-    await myDB.addTag(tag);
+    await await myDB.addTag(tag);
   }
 
   me.getTags = getTags;

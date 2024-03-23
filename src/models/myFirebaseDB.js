@@ -73,7 +73,7 @@ export default function myFirebaseDB() {
       item.id = doc.id;
       items.push(item);
     }
-    console.log("Items,",items);
+    console.log("Firebase Items,",items);
     return items;
   }
 
@@ -135,8 +135,7 @@ export default function myFirebaseDB() {
     await updateDoc(doc(db, "Items", item.id), item);
   }
 
-  // Search items from db by name and tag
-  // async function searchItems(name, tag, expiration, operator) {
+  // Search items from db by name, tag, expiration
   async function searchItems(name, tag, expiration) {
     if(!db) {
       console.error("Database not initialized!");
@@ -148,9 +147,17 @@ export default function myFirebaseDB() {
     let q;
     // Search by tag and expiration, then filter data by name
     if(tag){
-      q = query(itemsCollection, orderBy("expiration"), where("expiration", "<=", expiration ? expiration : moment().format("YYYY-MM-DD")), where("tags", "array-contains", tag));
+      if(expiration){
+        q = query(itemsCollection, orderBy("expiration"), where("expiration", "<=", expiration ? expiration : moment().format("YYYY-MM-DD")), where("tags", "array-contains", tag));
+      } else {
+        q = query(itemsCollection, orderBy("expiration"), where("tags", "array-contains", tag));
+      }
     } else {
-      q = query(itemsCollection, orderBy("expiration"), where("expiration", "<=", expiration ? expiration : moment().format("YYYY-MM-DD")));
+      if(expiration){
+        q = query(itemsCollection, orderBy("expiration"), where("expiration", "<=", expiration ? expiration : moment().format("YYYY-MM-DD")));
+      } else {
+        q = query(itemsCollection, orderBy("expiration"));
+      }
     }
     // Retrieve items data from db
     const res = await getDocs(q);
@@ -187,7 +194,10 @@ export default function myFirebaseDB() {
       return [];
     }
     const tagsCollection = collection(db, "Tags");
-    return (await getDocs(tagsCollection)).docs.data();
+    const tags = (await getDocs(tagsCollection)).docs.map((d) => d.data());
+    console.log("Firebase tags,", tags);
+    return (tags);
+    // return (await getDocs(tagsCollection)).docs.map((d) => d.data());
   }
 
   async function addTag(name) {

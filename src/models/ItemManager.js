@@ -37,15 +37,15 @@ export default function ItemManager() {
     await myDB.modifyItem(item);
   }
 
-  // Search items (not expired) by name and tag
-  async function searchItems(name, tag) {
-    return await myDB.searchItems(name, tag, ">=");
+  // Search items by name, tag, expiration
+  async function searchItems(name, tag, expiration) {
+    return await myDB.searchItems(name, tag, expiration);
   }
 
   // Search items (expired) by name and tag
-  async function searchExpiredItems(name, tag) {
-    return await myDB.searchItems(name, tag, "<");
-  }
+  // async function searchExpiredItems(name, tag) {
+  //   return await myDB.searchItems(name, tag, "<");
+  // }
 
   me.getItems = getItems;
   me.updateItems = updateItems;
@@ -54,7 +54,7 @@ export default function ItemManager() {
   me.removeItem = removeItem;
   me.modifyItem = modifyItem;
   me.searchItems = searchItems;
-  me.searchExpiredItems = searchExpiredItems;
+  // me.searchExpiredItems = searchExpiredItems;
 
   return me;
 }
