@@ -13,6 +13,8 @@ import {
   orderBy,
   where,
   writeBatch,
+  getAggregate,
+  sum,
 } from "firebase/firestore/lite";
 import moment from "moment/moment";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -200,6 +202,7 @@ export default function myFirebaseDB() {
     // return (await getDocs(tagsCollection)).docs.map((d) => d.data());
   }
 
+  // add new tag to db
   async function addTag(name) {
     if (!db) {
       console.error("Database not initialized!");
@@ -207,6 +210,31 @@ export default function myFirebaseDB() {
     }
     const tagsCollection = collection(db, "Tags");
     await addDoc(tagsCollection, name);
+  }
+
+  // sum items grouped by tag
+  // async function analyzeByTags() {
+  //   if (!db) {
+  //     console.error("Database not initialized!");
+  //     return [];
+  //   }
+  //   const itemsCollection = collection(db, "Items");
+  //   const q = query(itemsCollection, where())
+  // }
+
+  // search items by tag
+  async function sumItemsByTag(tag) {
+    if (!db) {
+      console.error("Database not initialized!");
+      return [];
+    }
+    const itemsCollection = collection(db, "Items");
+    const q = query(itemsCollection, where("tags", "array-contains", tag));
+    const res = await getAggregate(q, {
+      totalNum: sum("quantity")
+    })
+    console.log("Firebase search items by tag,", typeof(res.data().totalNum));
+    return res.data().totalNum;
   }
 
   me.getItems = getItems;
@@ -218,6 +246,8 @@ export default function myFirebaseDB() {
 
   me.getTags = getTags;
   me.addTag = addTag;
+
+  me.sumItemsByTag = sumItemsByTag;
 
   return me;
 }

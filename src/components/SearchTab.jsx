@@ -5,6 +5,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import ItemView from "./ItemView";
+import ItemGallery from "./ItemGallery";
 
 export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }) {
 
@@ -48,7 +49,8 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
           Clear
         </button>
       </form>
-      <div className="mt-4 border-top pt-2">
+      <ItemGallery items={items} tags={tags} modifyItem={modifyItem} deleteItem={deleteItem}/>
+      {/* <div className="mt-4 border-top pt-2">
         { items && 
             items.map((item) => (
             <ItemView 
@@ -62,8 +64,7 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
               // onModifyItem={onModifyItem}
             />
           )) }
-
-      </div>
+      </div> */}
     </div>
   )
 }

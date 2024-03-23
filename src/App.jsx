@@ -8,6 +8,7 @@ import NewItem from './components/NewItem';
 import ItemGallery from './components/ItemGallery';
 import ItemManager from './models/ItemManager';
 import TagManager from './models/TagManager';
+import AnalyticsTab from './components/AnalyticsTab';
 
 function App() {
 
@@ -19,6 +20,9 @@ function App() {
 
   // tags
   const [tags, setTags] = useState([]);
+
+  // analytics data
+  const [itemsByTag, setItemsByTag] = useState();
   
   const itemManager = ItemManager();
 
@@ -78,6 +82,16 @@ function App() {
     return await itemManager.searchItems(name, tag, expiration);
   }
 
+  // get anmalytics data from db
+  // async function getAnalyticsData() {
+  //   return await itemManager.analyzeByTags();
+  // }
+
+  // get anmalytics data from db
+  async function onAnalytics() {
+    setItemsByTag(await itemManager.analyzeByTags());
+  }
+
   return (
     <>
       <div className="container">
@@ -112,7 +126,7 @@ function App() {
               {/* <div>
                 <SearchBar/>
               </div> */}
-              <Tab.Content>
+              <Tab.Content style={{height:530}}>
                 <Tab.Pane eventKey="new">
                   <NewItem tags={tags} newItem={newItem} addTag={addTag}/>
                 </Tab.Pane>
@@ -125,8 +139,8 @@ function App() {
                 <Tab.Pane eventKey="search">
                   <SearchTab searchItems={searchItems} tags={tags} modifyItem={modifyItem} deleteItem={deleteItem}/>
                 </Tab.Pane>
-                <Tab.Pane eventKey="analytics">
-                  I guess this is for the third nav tab
+                <Tab.Pane eventKey="analytics" onEnter={onAnalytics} className='d-flex justify-content-center align-items-center'>
+                  <AnalyticsTab itemsByTag={itemsByTag}/>
                 </Tab.Pane>
               </Tab.Content>
             </Col>

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 export default function ItemGallery({ items, tags, modifyItem, expired = false, deleteItem } = {}) {
   return (
-    <div className='m-3'>
+    <div className='m-3 me-0 overflow-y-auto pe-3' style={{height:470}}>
       {/* <div className='d-flex flex-row justify-content-between align-items-center pb-2 pt-2 border-bottom'>
         <span>Name</span>
         <span>Quantity</span>
