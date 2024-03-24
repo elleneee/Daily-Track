@@ -2,9 +2,8 @@
  * SearchBar class
  * This component is a search bar for user to select tag or input name to find items.
  */
-import { React, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PropTypes from "prop-types";
-import ItemView from "./ItemView";
 import ItemGallery from "./ItemGallery";
 
 export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }) {
@@ -20,12 +19,8 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
     const formData = new FormData(event.target);
     const name = formData.get("searchName");
     let tag = formData.get("searchTag");
-    // if(tag === "")
     const expiration = formData.get("searchExp");
-    console.log(name, tag, expiration);
     setItems(await searchItems(name, tag, expiration));
-    console.log("🪞Search items,", items);
-    // event.target.reset();
   }
 
   // clear the form
@@ -37,13 +32,7 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
     <div className="m-3">
       <form className="d-flex flex-row gap-2"
         onSubmit={onSearch} ref={formRef}>
-        {/* <label htmlFor="seachName" className="form-label">
-          Name
-        </label> */}
         <input type="text" className="form-control" name="searchName" id="searchName" placeholder="Name"/>
-        {/* <label htmlFor="SeachTag" className="form-label">
-          Tag
-        </label> */}
         <select name="searchTag" id="searchTag" className="form-select">
           <option value="">Tag</option>
           {tags.map((tag) => (
@@ -59,21 +48,6 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
         </button>
       </form>
       <ItemGallery items={items} tags={tags} modifyItem={modifyItem} deleteItem={deleteItem}/>
-      {/* <div className="mt-4 border-top pt-2">
-        { items && 
-            items.map((item) => (
-            <ItemView 
-              key={item.id} 
-              item={item} 
-              tags={tags}
-              modifyItem={modifyItem}
-              deleteItem={deleteItem}
-              // isModify={isModify} 
-              // onRemoveItem={onRemoveItem} 
-              // onModifyItem={onModifyItem}
-            />
-          )) }
-      </div> */}
     </div>
   )
 }

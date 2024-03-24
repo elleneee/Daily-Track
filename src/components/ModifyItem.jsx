@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import {  useState } from 'react';
 import PropTypes from "prop-types";
 import { Button, Modal } from 'react-bootstrap';
 import { utils } from '../models/Utils';
-import moment from 'moment';
+// import moment from 'moment';
 
 export default function ModifyItem({ item, tags, modifyItem }) {
 
@@ -25,7 +25,6 @@ export default function ModifyItem({ item, tags, modifyItem }) {
       tags: formData.getAll("tags"),
       period: formData.get("period"),
     };
-    // console.log("✏️Modify comfirm item", Moditem);
     modifyItem(Moditem);
     alert("Modified sucessfully!");
     handleClose();
@@ -111,14 +110,6 @@ export default function ModifyItem({ item, tags, modifyItem }) {
             </div>
           </form>
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" type='submit'>
-            Comfirm
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   )

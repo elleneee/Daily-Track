@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import PropTypes from "prop-types";
 import ModifyItem from './ModifyItem';
 
@@ -27,7 +27,4 @@ ItemView.propTypes = {
   modifyItem: PropTypes.func,
   expired: PropTypes.bool,
   deleteItem: PropTypes.func,
-  // onRemoveItem: PropTypes.func.isRequired,
-  // onModifyItem: PropTypes.func,
-  // isModify: PropTypes.bool,
 };

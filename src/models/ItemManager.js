@@ -42,11 +42,6 @@ export default function ItemManager() {
     return await myDB.searchItems(name, tag, expiration);
   }
 
-  // Search items (expired) by name and tag
-  // async function searchExpiredItems(name, tag) {
-  //   return await myDB.searchItems(name, tag, "<");
-  // }
-
   // analyze items, sum items by tag
   async function analyzeByTags() {
     const tags = (await myDB.getTags()).map((t) => t.name);
@@ -58,7 +53,7 @@ export default function ItemManager() {
       tags: tags,
       nums: itemsNum,
     }
-    console.log("ItemManager analyze,", data);
+    // console.log("ItemManager analyze,", data);
     return data;
   }
 
@@ -69,7 +64,6 @@ export default function ItemManager() {
   me.removeItem = removeItem;
   me.modifyItem = modifyItem;
   me.searchItems = searchItems;
-  // me.searchExpiredItems = searchExpiredItems;
 
   me.analyzeByTags = analyzeByTags;
 

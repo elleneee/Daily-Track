@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from "prop-types";
 import { Button, Modal } from 'react-bootstrap';
 
@@ -22,7 +22,7 @@ export default function NewTag({ addTag }) {
 
   return (
     <>
-      <button className='btn btn-sm btn-outline-secondary ms-5' onClick={handleShow}>Add Tag</button>
+      <button className='btn btn-sm btn-outline-secondary' type='click' onClick={handleShow}>Add Tag</button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

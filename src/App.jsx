@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 // import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
@@ -29,6 +29,7 @@ function App() {
   const tagManager = TagManager();
 
   useEffect(() => {
+    updateItems();
     refreshItems();
     refreshExpItems();
     refreshTags();
@@ -47,6 +48,10 @@ function App() {
   // get tags from db
   async function refreshTags() {
     setTags(await tagManager.getTags());
+  }
+
+  async function updateItems() {
+    await itemManager.updateItems();
   }
 
   // New item
@@ -81,11 +86,6 @@ function App() {
   async function searchItems(name, tag, expiration){
     return await itemManager.searchItems(name, tag, expiration);
   }
-
-  // get anmalytics data from db
-  // async function getAnalyticsData() {
-  //   return await itemManager.analyzeByTags();
-  // }
 
   // get anmalytics data from db
   async function onAnalytics() {
@@ -123,10 +123,7 @@ function App() {
               </Nav>
             </Col>
             <Col sm={9}>
-              {/* <div>
-                <SearchBar/>
-              </div> */}
-              <Tab.Content style={{height:530}}>
+              <Tab.Content style={{height:530, width:680}}>
                 <Tab.Pane eventKey="new">
                   <NewItem tags={tags} newItem={newItem} addTag={addTag}/>
                 </Tab.Pane>
@@ -139,7 +136,7 @@ function App() {
                 <Tab.Pane eventKey="search">
                   <SearchTab searchItems={searchItems} tags={tags} modifyItem={modifyItem} deleteItem={deleteItem}/>
                 </Tab.Pane>
-                <Tab.Pane eventKey="analytics" onEnter={onAnalytics} className='d-flex justify-content-center align-items-center'>
+                <Tab.Pane eventKey="analytics" onEnter={onAnalytics}>
                   <AnalyticsTab itemsByTag={itemsByTag}/>
                 </Tab.Pane>
               </Tab.Content>

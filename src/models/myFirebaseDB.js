@@ -20,7 +20,7 @@ import moment from "moment/moment";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-export default function myFirebaseDB() {
+function myFirebaseDB() {
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
@@ -31,19 +31,17 @@ export default function myFirebaseDB() {
     messagingSenderId: "1094234895674",
     appId: "1:1094234895674:web:ddcf6a22c5c74306f98c03"
   };
-
-  // Initialize Firebase
-  // const app = initializeApp(firebaseConfig);
-
+  
   // Me object containing the public methods and properties
   const me = {};
-
+  
+  // Initialize Firebase
   function initializeFirebase() {
     let db;
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    console.log("Firebase initialized!", app, analytics);
+    // console.log("Firebase initialized!", app, analytics);
 
     db = getFirestore(app);
 
@@ -75,7 +73,7 @@ export default function myFirebaseDB() {
       item.id = doc.id;
       items.push(item);
     }
-    console.log("Firebase Items,",items);
+    // console.log("Firebase Items,",items);
     return items;
   }
 
@@ -197,7 +195,7 @@ export default function myFirebaseDB() {
     }
     const tagsCollection = collection(db, "Tags");
     const tags = (await getDocs(tagsCollection)).docs.map((d) => d.data());
-    console.log("Firebase tags,", tags);
+    // console.log("Firebase tags,", tags);
     return (tags);
     // return (await getDocs(tagsCollection)).docs.map((d) => d.data());
   }
@@ -212,16 +210,6 @@ export default function myFirebaseDB() {
     await addDoc(tagsCollection, name);
   }
 
-  // sum items grouped by tag
-  // async function analyzeByTags() {
-  //   if (!db) {
-  //     console.error("Database not initialized!");
-  //     return [];
-  //   }
-  //   const itemsCollection = collection(db, "Items");
-  //   const q = query(itemsCollection, where())
-  // }
-
   // search items by tag
   async function sumItemsByTag(tag) {
     if (!db) {
@@ -233,7 +221,7 @@ export default function myFirebaseDB() {
     const res = await getAggregate(q, {
       totalNum: sum("quantity")
     })
-    console.log("Firebase search items by tag,", typeof(res.data().totalNum));
+    // console.log("Firebase search items by tag,", typeof(res.data().totalNum));
     return res.data().totalNum;
   }
 

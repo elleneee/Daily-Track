@@ -2,7 +2,7 @@
  * Item that holds all info of redcored item, including name, quantity, expiration, tags and reminder period
  */
 
-export function Item({_id, _name, _quantity = 1, _expiration, _tags, _period = "Day"} = {}) {
+export default function Item({_id, _name, _quantity = 1, _expiration, _tags, _period = "Day"} = {}) {
   const me = {
     id: _id,
     name: _name,
