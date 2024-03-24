@@ -2,15 +2,19 @@
  * SearchBar class
  * This component is a search bar for user to select tag or input name to find items.
  */
-import { React, useState } from "react";
+import { React, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import ItemView from "./ItemView";
 import ItemGallery from "./ItemGallery";
 
 export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }) {
 
+  // save search result
   const [items, setItems] = useState([]);
 
+  const formRef = useRef();
+
+  // search items
   async function onSearch(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -23,11 +27,16 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
     console.log("🪞Search items,", items);
     // event.target.reset();
   }
+
+  // clear the form
+  function onClear() {
+    formRef.current.reset();
+  }
   
   return(
     <div className="m-3">
       <form className="d-flex flex-row gap-2"
-        onSubmit={onSearch}>
+        onSubmit={onSearch} ref={formRef}>
         {/* <label htmlFor="seachName" className="form-label">
           Name
         </label> */}
@@ -45,7 +54,7 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
         <button type="submit" id="search-btn" className="btn btn-outline-success">
           Search
         </button>
-        <button type="click" id="search-btn" className="btn btn-outline-success">
+        <button type="click" id="search-btn" className="btn btn-outline-success" onClick={onClear}>
           Clear
         </button>
       </form>
