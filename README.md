@@ -12,11 +12,22 @@ Try it online: [DailyTack](https://dailytrack-functional.web.app/)
 * `npm install`  
 * `npm run dev`  
 
-### How to test
-`npm ru test`
-
 Clone the project and run commands in the directory.  
-Open http://localhost:5173/ to view it in your broswer.
+Open http://localhost:5173/ to view it in your broswer.  
+
+### How to test
+* `npm run test`  
+
+Test is writen using Cypress, visit [test file](cypress/e2e/0-dailyTrack/dailyTrack.cy.js) to see details.  
+It will cover six use cases:  
+* Modify the quantity of the first item to 11 in home page
+* Delete the first item in the home page
+* Add a new item
+* Search items by name and tag
+* Search items by expiration
+* Show analytics function
+
+Test introduction video: [Testing DailyTrack]()
 
 ## Design document
 Online design document: [Design document](https://docs.google.com/document/d/1rEiOIVWCqxiEGwF3uWYWnPBqwJgoAN26t8y2oIJMai0/edit?usp=sharing)

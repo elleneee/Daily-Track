@@ -9,7 +9,7 @@ describe("visit dailyTrack app", () => {
   });
 
   // Test modify item function
-  it("Modify the quantity of the first item", () => {
+  it("Modify the quantity of the first item in the home page", () => {
     cy.get("button[name=modify-modal-btn]").first().click();
     // cy.get("body > div.fade.modal.show").should("be.visible");
     cy.get("form input[name=quantity]").eq(1).clear({ force: true }).type("11", { force: true});
@@ -17,7 +17,7 @@ describe("visit dailyTrack app", () => {
   });
 
   // Test delete item function
-  it("Delete item", () => {
+  it("Delete the first item in the home page", () => {
     cy.get("button[name='item-delete']").first().click();
   });
 
@@ -44,7 +44,7 @@ describe("visit dailyTrack app", () => {
   });
 
   // search items by name and tag
-  it("Search items by name", () => {
+  it("Search items by name and tag", () => {
     cy.get(".nav-item").eq(3).click();
     cy.get("#searchName").type("i");
     cy.get("select").select("Medicine");
