@@ -1,14 +1,14 @@
 // import { useState } from 'react'
-import { useEffect, useState } from 'react';
-import './App.css';
+import { React, useEffect, useState } from "react";
+import "./App.css";
 // import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Col, Nav, Row, Tab } from 'react-bootstrap';
-import SearchTab from './components/SearchTab';
-import NewItem from './components/NewItem';
-import ItemGallery from './components/ItemGallery';
-import ItemManager from './models/ItemManager';
-import TagManager from './models/TagManager';
-import AnalyticsTab from './components/AnalyticsTab';
+import { Col, Nav, Row, Tab } from "react-bootstrap";
+import SearchTab from "./components/SearchTab";
+import NewItem from "./components/NewItem";
+import ItemGallery from "./components/ItemGallery";
+import ItemManager from "./models/ItemManager";
+import TagManager from "./models/TagManager";
+import AnalyticsTab from "./components/AnalyticsTab";
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
   const [items, setItems] = useState([]);
 
   // expired items
-  const [expiredItems, setExpItems] = useState([])
+  const [expiredItems, setExpItems] = useState([]);
 
   // tags
   const [tags, setTags] = useState([]);
@@ -33,7 +33,7 @@ function App() {
     refreshItems();
     refreshExpItems();
     refreshTags();
-  }, [])
+  }, []);
   
   // Retreive items from db
   async function refreshItems() {
@@ -62,8 +62,20 @@ function App() {
 
   // add new tag
   async function addTag(tag) {
+    if(isTagExists(tag)){
+      return;
+    }
     await tagManager.addTag(tag);
     setTags(await tagManager.getTags());
+  }
+
+  // check if the tag exists
+  function isTagExists(tag){
+    const res = tags.filter((t) => t.name === tag.name).length > 0;
+    if(res > 0){
+      return true;
+    }
+    return false;
   }
 
   // Modify item
@@ -106,7 +118,7 @@ function App() {
             <Col sm={2} className='border-end border-success-subtle'>
               <Nav variant="pills" className="flex-column">
                 <Nav.Item>
-                  <Nav.Link eventKey="new">New</Nav.Link>
+                  <Nav.Link eventKey="new" >New</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link eventKey="home">Home</Nav.Link>
@@ -125,12 +137,12 @@ function App() {
             <Col sm={9}>
               <Tab.Content style={{height:530, width:680}}>
                 <Tab.Pane eventKey="new">
-                  <NewItem tags={tags} newItem={newItem} addTag={addTag}/>
+                  <NewItem tags={tags} newItem={newItem} addTag={addTag} isTagExists={isTagExists}/>
                 </Tab.Pane>
-                <Tab.Pane eventKey="home">
+                <Tab.Pane eventKey="home" onEnter={refreshItems}>
                   <ItemGallery items={items} tags={tags} modifyItem={modifyItem} deleteItem={deleteItem}/>
                 </Tab.Pane>
-                <Tab.Pane eventKey="expired">
+                <Tab.Pane eventKey="expired" onEnter={refreshExpItems}>
                   <ItemGallery items={expiredItems} modifyItem={modifyItem} deleteItem={deleteItem}/>
                 </Tab.Pane>
                 <Tab.Pane eventKey="search">
@@ -145,7 +157,7 @@ function App() {
         </Tab.Container>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

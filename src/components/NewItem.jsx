@@ -1,10 +1,10 @@
-import moment from 'moment';
-import {  useRef } from 'react';
+import moment from "moment";
+import { React, useRef } from "react";
 import PropTypes from "prop-types";
-import NewTag from './NewTag';
-import { utils } from '../models/Utils';
+import NewTag from "./NewTag";
+import { utils } from "../models/Utils";
 
-export default function NewItem({ tags, newItem, addTag }) {
+export default function NewItem({ tags, newItem, addTag, isTagExists }) {
   
   const period = utils.period;
 
@@ -77,37 +77,38 @@ export default function NewItem({ tags, newItem, addTag }) {
         </label>
         <div className='d-flex flex-wrap'>
           {tags.map((tag) => (
-          <div className="form-check me-2" key={tag.name}>
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id={tag.name}
-              name="tags"
-              value={tag.name}
-              defaultChecked={tag.name==="All"}
-            />
-            <label className="form-check-label" htmlFor={tag.name}>
-              {tag.name}
-            </label>
-          </div>
+            <div className="form-check me-2" key={tag.name}>
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={tag.name}
+                name="tags"
+                value={tag.name}
+                defaultChecked={tag.name==="All"}
+              />
+              <label className="form-check-label" htmlFor={tag.name}>
+                {tag.name}
+              </label>
+            </div>
           ))}
         </div>
       </form>
-      <NewTag addTag={addTag}/>
+      <NewTag addTag={addTag} isTagExists={isTagExists}/>
       <div className='d-flex justify-content-end gap-2'>
         <button type="click" className="btn btn-success d-block" onClick={onCancel}>
           Cancel
         </button>
-        <button type="submit" className="btn btn-success d-block" onClick={onNew}>
+        <button type="submit" className="btn btn-success d-block" id="newItem-confirm" onClick={onNew}>
           Comfirm
         </button>
       </div>
       
     </div>
-  )
+  );
 }
 NewItem.propTypes = {
   tags: PropTypes.array.isRequired,
   newItem: PropTypes.func.isRequired,
   addTag: PropTypes.func,
+  isTagExists: PropTypes.func,
 };

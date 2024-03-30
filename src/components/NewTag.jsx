@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
+import { React, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal } from "react-bootstrap";
 
-export default function NewTag({ addTag }) {
+export default function NewTag({ addTag, isTagExists }) {
 
   const [show, setShow] = useState(false);
 
@@ -15,14 +15,18 @@ export default function NewTag({ addTag }) {
     const tag = {
       name: nameRef.current.value,
     };
-    addTag(tag);
-    alert(`Tag ${tag.name} is successfully added!`);
-    handleClose();
+    if(!isTagExists(tag)){
+      addTag(tag);
+      alert(`Tag ${tag.name} is successfully added!`);
+      handleClose();
+    } else {
+      alert(`Tag ${tag.name} has already existed!`);
+    }
   }
 
   return (
     <>
-      <button className='btn btn-sm btn-outline-secondary' type='click' onClick={handleShow}>Add Tag</button>
+      <button className='btn btn-sm btn-outline-secondary' id="addTag-modal-btn" type='click' onClick={handleShow}>Add Tag</button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -30,23 +34,24 @@ export default function NewTag({ addTag }) {
         </Modal.Header>
         <Modal.Body>
           <form>
-            <label className='form-label' htmlFor='name'>Name:</label>
-            <input className='form-control' type='text' id='name' ref={nameRef} required></input>
+            <label className='form-label' htmlFor='tagName'>Name:</label>
+            <input className='form-control' type='text' id='tagName' ref={nameRef} required></input>
           </form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={onAddTag}>
+          <Button variant="primary" id="addTag-comfirm" onClick={onAddTag}>
             Comfirm
           </Button>
         </Modal.Footer>
       </Modal>
     </>
-  )
+  );
 }
 
 NewTag.propTypes = {
   addTag: PropTypes.func,
+  isTagExists: PropTypes.func,
 };

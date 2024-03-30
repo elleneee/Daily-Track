@@ -2,7 +2,7 @@
  * SearchBar class
  * This component is a search bar for user to select tag or input name to find items.
  */
-import { useRef, useState } from "react";
+import { React, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import ItemGallery from "./ItemGallery";
 
@@ -36,7 +36,7 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
         <select name="searchTag" id="searchTag" className="form-select">
           <option value="">Tag</option>
           {tags.map((tag) => (
-            <option key={tag.name} value={tag.name}>{tag.name}</option>
+            <option key={tag.name} id={tag.name} value={tag.name}>{tag.name}</option>
           ))}
         </select>
         <input type="date" name="searchExp" id="searchExp" className="form-control"/>
@@ -49,7 +49,7 @@ export default function SearchTab( { searchItems, tags, modifyItem, deleteItem }
       </form>
       <ItemGallery items={items} tags={tags} modifyItem={modifyItem} deleteItem={deleteItem}/>
     </div>
-  )
+  );
 }
 
 SearchTab.propTypes = {

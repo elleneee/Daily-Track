@@ -1,7 +1,7 @@
-import {  useState } from 'react';
+import { React, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Modal } from 'react-bootstrap';
-import { utils } from '../models/Utils';
+import { Button, Modal } from "react-bootstrap";
+import { utils } from "../models/Utils";
 // import moment from 'moment';
 
 export default function ModifyItem({ item, tags, modifyItem }) {
@@ -33,7 +33,7 @@ export default function ModifyItem({ item, tags, modifyItem }) {
 
   return (
     <>
-      <button className='btn btn-sm btn-outline-success ms-5' onClick={handleShow}>Modify</button>
+      <button className='btn btn-sm btn-outline-success ms-5' name="modify-modal-btn" onClick={handleShow}>Modify</button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -54,27 +54,6 @@ export default function ModifyItem({ item, tags, modifyItem }) {
             </label>
             <input type="date" className="form-control" id="item-exp" name="expiration" 
               defaultValue={item.expiration}/>
-            <label htmlFor="item-tags" className="col-form-label">
-              Tags:
-            </label>
-            <div className='d-flex flex-wrap'>
-              {tags?.map((tag) => (
-              <div className="form-check me-2" key={tag.name}>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id={tag.name}
-                  name="tags"
-                  value={tag.name}
-                  defaultChecked={item.tags.includes(tag.name)}
-                />
-                <label className="form-check-label" htmlFor={tag.name}>
-                  {tag.name}
-                </label>
-              </div>
-            ))}
-            </div>
-            
             <label htmlFor="item-period" className="form-label me-2 mt-2 d-block">
               Reminder period:
             </label>
@@ -99,20 +78,39 @@ export default function ModifyItem({ item, tags, modifyItem }) {
                 </div>
               ))}
             </div>
+            <label htmlFor="item-tags" className="col-form-label d-block">
+              Tags:
+            </label>
+            <div className='d-flex flex-wrap'>
+              {tags?.map((tag) => (
+                <div className="form-check me-2" key={tag.name}>
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id={tag.name}
+                    name="tags"
+                    value={tag.name}
+                    defaultChecked={item.tags.includes(tag.name)}
+                  />
+                  <label className="form-check-label" htmlFor={tag.name}>
+                    {tag.name}
+                  </label>
+                </div>
+              ))}
+            </div>
             <div className='mt-4 border-top pt-2 d-flex justify-content-end gap-2'>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant="secondary" id="modify-modal-close" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="success" type='submit'>
+              <Button variant="success" id="modify-modal-comfirm" type='submit'>
                 Comfirm
               </Button>
-
             </div>
           </form>
         </Modal.Body>
       </Modal>
     </>
-  )
+  );
 }
 
 ModifyItem.propTypes = {

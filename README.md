@@ -10,7 +10,10 @@ Try it online: [DailyTack](https://dailytrack-functional.web.app/)
 
 ### How to run
 * `npm install`  
-* `npm run dev`
+* `npm run dev`  
+
+### How to test
+`npm ru test`
 
 Clone the project and run commands in the directory.  
 Open http://localhost:5173/ to view it in your broswer.
