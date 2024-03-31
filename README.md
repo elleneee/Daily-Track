@@ -16,6 +16,7 @@ Clone the project and run commands in the directory.
 Open http://localhost:5173/ to view it in your broswer.  
 
 ### How to test
+* `npm run dev`
 * `npm run test`  
 
 Test is writen using Cypress, visit [test file](cypress/e2e/0-dailyTrack/dailyTrack.cy.js) to see details.  
@@ -27,7 +28,7 @@ It will cover six use cases:
 * Search items by expiration
 * Show analytics function
 
-Test introduction video: [Testing DailyTrack]()
+Test introduction video: [Testing DailyTrack](https://youtu.be/9NV4vhs3XmQ)
 
 ## Design document
 Online design document: [Design document](https://docs.google.com/document/d/1rEiOIVWCqxiEGwF3uWYWnPBqwJgoAN26t8y2oIJMai0/edit?usp=sharing)
